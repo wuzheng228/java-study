@@ -1,2 +1,4 @@
-package reflectinAndAnno.section62;public class MyAnnotation {
+package reflectinAndAnno.section62;
+
+public @interface MyAnnotation {
 }
