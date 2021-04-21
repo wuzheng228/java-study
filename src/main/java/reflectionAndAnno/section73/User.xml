@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="reflectionAndAnno.section73.User">
+    <table>user</table>
+    <field name="id">
+        <column>id</column>
+        <type>int</type>
+    </field>
+    <field name="loginName">
+        <column>loginName</column>
+        <type>String</type>
+    </field>
+    <field name="password">
+        <column>password</column>
+        <type>String</type>
+    </field>
+    <field name="name">
+        <column>name</column>
+        <type>String</type>
+    </field>
+    <field name="age">
+        <column>age</column>
+        <type>int</type>
+    </field>
+    <field name="gender">
+        <column>gender</column>
+        <type>String</type>
+    </field>
+</class>
