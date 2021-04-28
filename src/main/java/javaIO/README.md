@@ -69,3 +69,101 @@ public class FileFilterDemo {
     }
 }
 ```
+# 2 RandomAccessFile 类
+RandomAccessFile
+
+- 可以**读写**文件
+- 支持随机访问，可以直接跳转至文件任意地方读写数据
+- 可以访问文件部分内容
+- 自由定义记录指针，可以在文件后增加内容
+
+通过以下方法操作文件记录指针：
+```java
+getFilePointer() // 获取指针位置
+getFilePointer() // 定位文件指针到指定位置
+```
+通过如下方法读写文件：
+```java
+int read()                              // 读取单个字节，返回单个字节数据
+int read(byte b[])                      // 读取b.length个字节，返回实际的读取的字节数
+int read(byte b[], int off, int len)    // 读取b.length个字节，返回实际的读取的字节数存储从b[off]开始
+void write(int b)                       // 写入一个字节
+void write(byte b[])                    // 将字节数组b中的字节写入文件
+write(byte b[], int off, int len)       // 将字节数字从off开始的字节写入文件
+```
+例子：参加section20
+```java
+public class RandomAccessFileTest {
+    public static void main(String[] args) {
+        read();
+    }
+
+    public static void read() {
+        try {
+            RandomAccessFile rf = new RandomAccessFile("a.txt", "rw");
+            // 输出默认的指针位置
+            System.out.println("默认指针位置" + rf.getFilePointer());
+            // 写入字符 A B
+            rf.write('A');
+            System.out.println("当前指针位置" + rf.getFilePointer());
+            rf.write('B');
+            // 写入 “中”
+            String s = "中";
+            rf.write(s.getBytes("gbk"));
+            System.out.println("文件末尾" + rf.getFilePointer());
+            // 移动指针到文件头
+            rf.seek(0);
+            byte[] buffer = new byte[(int)rf.length()];
+            rf.read(buffer);
+            System.out.println(Arrays.toString(buffer));
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+# 3 IO流的分类
+java把不同的输入和输出源抽象成“流”。通过“流”可以用相同的方式访问不同的输入和输出源。
+## 3.1 流的分类
+
+1. 输入流和输出流
+- 输入流
+    从文件读取数据
+- 输出流
+    向文件中写入数据
+基类(都是抽象类):
+ - 输入流
+    InputStream、Reader 
+ - 输出流
+    OutputStream、Writer 
+2. 字节流字符流
+区别：数据单元不同，字节流是8位的字节，字符流是16位的字符
+
+- 字节流
+    单位字节，读取二进制数据，图像声音
+- 字符流
+    单位字符，读取文本
+
+3. 节点流和包装流(处理流)
+区分：流是否直接与特定的地方相连
+
+- 节点流
+    可以向一个特定的IO设备读写数据的流。也叫做低级流
+- 包装流
+    对一个已经存在的流进行连接或封装，然后实现数据读写功能。也叫高级流。
+    
+    好处是只要使用相同的处理流，程序就能使用完全相同的输入输出代码来访问不同的数据源，处理流包装节点流的变化，程序实际访问的数据源也会发生变化
+
+![](https://github.com/wuzheng228/java-study/blob/master/images/%E8%8A%82%E7%82%B9%E6%B5%81%E4%B8%8E%E5%A4%84%E7%90%86%E6%B5%81.png?raw=true)
+
+# 4 字节流
+## 4.1 InputStream / OutputStream
+1. InputStream类
+    抽象基类
+    
+    常用方法:
+    - abstract int read()
+    - int read(byte b[])
+    - int read(byte b[], int off, int len)
+    
+
