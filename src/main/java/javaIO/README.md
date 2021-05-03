@@ -405,5 +405,85 @@ public class OutputStreamWriterTest {
     }
 }
 ```
-## 5.4 字符流的缓冲流
+## 5.3 字符流的缓冲流
+1.BufferedReader
+构造器:
+- BufferedReader(Reader in)
+- BufferedReader(Reader in, int size)
+
+可以读取一行字符串，直到读到换行为止，返回的的字符串不包含换行符
+
+例子:
+```java
+public class BufferedReaderDemo {
+    public static void main(String[] args) {
+        FileInputStream in;
+        try {
+            in = new FileInputStream("a.txt");
+            InputStreamReader reader = new InputStreamReader(in);
+            BufferedReader breader = new BufferedReader(reader);
+            while (breader.ready()) {
+                System.out.println(breader.readLine());
+            }
+            breader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+2.BufferedWriter
+构造器与BufferedReader类似
+例子:
+```java
+public class BufferedReaderWriterDemo {
+    public static void main(String[] args) {
+        try {
+            InputStreamReader in = new InputStreamReader(System.in);
+            BufferedReader br = new BufferedReader(in);
+            FileWriter fw = new FileWriter("a.txt");
+            BufferedWriter bf = new BufferedWriter(fw);
+            String input = null;
+            while (!(input = br.readLine()).equals("exit")) {
+                bf.write(input);
+                bf.newLine();
+            }
+            br.close();
+            bf.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+3.PrintWriter
+自动刷新的字符缓冲输出流
+
+构造方法:
+- PrintWriter(File file)
+- PrintWriter(OutputStream out)
+- PrintWriter(OutputStream out, boolean autoFlush)
+- PrintWriter(Writer out)
+- PrintWriter(Writer out, boolean autoFlush)
+
+常用方法：print、println。 如果自动刷新则不会缓存
+
+例子:
+```java
+public class PrintWriterDemo {
+    public static void main(String[] args) {
+        try {
+            FileOutputStream fos = new FileOutputStream("a.txt");
+            OutputStreamWriter ow = new OutputStreamWriter(fos);
+            PrintWriter printWriter = new PrintWriter(ow, true);
+            printWriter.write("写入一行数据");
+            printWriter.close();
+            ow.close();
+            fos.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
 
